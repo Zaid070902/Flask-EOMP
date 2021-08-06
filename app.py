@@ -1,3 +1,5 @@
+# imports
+
 import hmac
 import sqlite3
 from datetime import timedelta
@@ -21,7 +23,7 @@ class Product(object):
         self.prod_price = prod_price
         self.amount = amount
 
-
+# creating user table
 def user_table():
     conn = sqlite3.connect('blog.db')
     print("Opened database successfully")
@@ -37,6 +39,8 @@ def user_table():
 
 
 user_table()
+
+# fetching users from table
 
 
 def fetch_users():
@@ -54,6 +58,8 @@ def fetch_users():
 
 users = fetch_users()
 
+# product table
+
 
 def post_table():
     with sqlite3.connect('blog.db') as conn:
@@ -65,6 +71,8 @@ def post_table():
 
 
 post_table()
+
+# fetching product from table
 
 
 def fetch_users():
@@ -99,7 +107,7 @@ def identity(payload):
 
 app = Flask(__name__)
 app.debug = True
-app.config['JWT_EXPIRATION_DELTA'] = timedelta(days = 1)
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(days=1)
 app.config['SECRET_KEY'] = 'super-secret'
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -117,6 +125,8 @@ jwt = JWT(app, authenticate, identity)
 @jwt_required()
 def protected():
     return '%s' % current_identity
+
+# register route
 
 
 @app.route('/registration/', methods=["POST"])
@@ -148,6 +158,8 @@ def user_registration():
         return "Message send"
     return response
 
+# adding products route
+
 
 @app.route('/create-blog/', methods=["POST"])
 @jwt_required()
@@ -170,6 +182,8 @@ def create_blog():
             response['description'] = "Blog post added successfully"
         return response
 
+# fetching users route
+
 
 @app.route('/get-user/', methods=["GET"])
 def get_users():
@@ -184,6 +198,8 @@ def get_users():
     response['data'] = posts
     return response
 
+# fetching products route
+
 
 @app.route('/get-blogs/', methods=["GET"])
 def get_blogs():
@@ -197,6 +213,8 @@ def get_blogs():
     response['status_code'] = 200
     response['data'] = posts
     return response
+
+# delete products route
 
 
 @app.route("/delete-post/<int:id>")
