@@ -1,6 +1,6 @@
 import hmac
-import datetime
 import sqlite3
+from datetime import timedelta
 
 from flask import Flask, request, jsonify
 from flask_jwt import JWT, jwt_required, current_identity
@@ -99,6 +99,7 @@ def identity(payload):
 
 app = Flask(__name__)
 app.debug = True
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(days = 1)
 app.config['SECRET_KEY'] = 'super-secret'
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
