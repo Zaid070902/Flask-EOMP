@@ -212,7 +212,7 @@ def get_blogs():
 
     response['status_code'] = 200
     response['data'] = posts
-    return response
+    return jsonify(response)
 
 # delete products route
 
