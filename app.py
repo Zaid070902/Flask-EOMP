@@ -5,8 +5,10 @@ import sqlite3
 from datetime import timedelta
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from flask_jwt import JWT, jwt_required, current_identity
 from flask_mail import Mail, Message
+import flask_cors
 
 
 class User(object):
@@ -24,6 +26,8 @@ class Product(object):
         self.amount = amount
 
 # creating user table
+
+
 def user_table():
     conn = sqlite3.connect('blog.db')
     print("Opened database successfully")
@@ -106,6 +110,9 @@ def identity(payload):
 
 
 app = Flask(__name__)
+
+CORS(app)
+
 app.debug = True
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(days=1)
 app.config['SECRET_KEY'] = 'super-secret'
